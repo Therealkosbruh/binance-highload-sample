@@ -1,0 +1,28 @@
+.app {
+	display: grid;
+	grid-template-rows: 52px 1fr 36px;
+	height: 100vh;
+	gap: 1px;
+	background-color: var(--border);
+	overflow: hidden;
+}
+
+.main {
+	min-height: 0;
+	overflow: hidden;
+}
+
+@media (max-width: 768px) {
+	.app {
+		display: flex;
+		flex-direction: column;
+		height: 100dvh;
+		overflow: visible;
+	}
+
+	.main {
+		flex: 1;
+		overflow: visible;
+		min-height: 0;
+	}
+}

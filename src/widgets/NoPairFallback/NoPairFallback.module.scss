@@ -1,0 +1,38 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	gap: 14px;
+	text-align: center;
+	padding: 32px;
+}
+
+.iconWrap {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	border: 1px solid var(--border);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--ghost);
+	margin-bottom: 4px;
+}
+
+.title {
+	font-family: var(--font-sans, sans-serif);
+	font-size: 15px;
+	font-weight: 500;
+	color: var(--ink);
+	letter-spacing: 0.01em;
+}
+
+.subtitle {
+	font-family: var(--font-sans, sans-serif);
+	font-size: 12px;
+	color: var(--ghost);
+	max-width: 260px;
+	line-height: 1.65;
+}

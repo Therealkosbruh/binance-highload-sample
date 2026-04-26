@@ -1,0 +1,215 @@
+.sidebar {
+	background: var(--surface);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.section {
+	padding: 12px 0 4px;
+	flex-shrink: 0;
+
+	& + & {
+		border-top: 1px solid var(--border);
+	}
+}
+
+.sectionLabel {
+	display: block;
+	padding: 0 14px 6px;
+	font-family: var(--font-sans, sans-serif);
+	font-size: 9px;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: var(--ghost);
+	font-weight: 400;
+}
+
+.marketGrid {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+// Popular pairs — simple Link
+.item,
+.activeItem {
+	display: flex;
+	align-items: center;
+	padding: 6px 14px;
+	text-decoration: none;
+	transition: background 0.1s;
+	flex: 0 0 50%;
+
+	&:hover {
+		background: rgba(255, 255, 255, 0.03);
+	}
+}
+
+.item.touched {
+	background: rgba(255, 255, 255, 0.03);
+}
+
+.activeItem {
+	background: var(--glow);
+}
+
+// Watchlist rows — wrapper with delete button
+.itemWrap,
+.activeItemWrap {
+	display: flex;
+	align-items: center;
+	transition: background 0.1s;
+
+	&:hover {
+		background: rgba(255, 255, 255, 0.03);
+
+		.deleteBtn {
+			opacity: 1;
+		}
+	}
+}
+
+.itemWrap.touched,
+.activeItemWrap.touched {
+	background: rgba(255, 255, 255, 0.03);
+
+	.deleteBtn {
+		opacity: 1;
+	}
+}
+
+.activeItemWrap {
+	background: var(--glow);
+}
+
+.itemLink {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	padding: 6px 14px;
+	text-decoration: none;
+	min-width: 0;
+}
+
+.deleteBtn {
+	flex-shrink: 0;
+	padding: 6px 10px;
+	color: var(--ghost);
+	opacity: 0;
+	transition:
+		opacity 0.1s,
+		color 0.12s;
+
+	&:hover {
+		color: var(--bear);
+	}
+}
+
+.pairName {
+	font-family: var(--font-mono, monospace);
+	font-size: 11px;
+	font-weight: 500;
+	color: var(--ink-dim);
+	letter-spacing: 0.02em;
+}
+
+.activeItem .pairName,
+.activeItemWrap .pairName {
+	color: var(--ink);
+}
+
+.addRow {
+	margin-top: auto;
+	padding: 12px 14px;
+	border-top: 1px solid var(--border);
+}
+
+.addBtn {
+	width: 100%;
+	padding: 7px 10px;
+	border: 1px dashed rgba(255, 255, 255, 0.12);
+	border-radius: 5px;
+	font-family: var(--font-sans, sans-serif);
+	font-size: 11px;
+	color: var(--ghost);
+	text-align: center;
+	transition: all 0.12s;
+
+	&:hover {
+		color: var(--ink-dim);
+		border-color: rgba(255, 255, 255, 0.2);
+		background: rgba(255, 255, 255, 0.03);
+	}
+}
+
+// Mobile: horizontal scrollable strip
+@media (max-width: 768px) {
+	.sidebar {
+		flex-direction: row;
+		height: 48px;
+		overflow-x: auto;
+		overflow-y: hidden;
+		align-items: stretch;
+	}
+
+	.section {
+		padding: 0;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		flex-shrink: 0;
+		border-top: none;
+
+		& + & {
+			border-top: none;
+			border-left: 1px solid var(--border);
+		}
+	}
+
+	.sectionLabel {
+		display: none;
+	}
+
+	.marketGrid {
+		flex-wrap: nowrap;
+		flex-direction: row;
+	}
+
+	.item,
+	.activeItem {
+		flex: 0 0 auto;
+		padding: 0 10px;
+		height: 48px;
+	}
+
+	.itemWrap,
+	.activeItemWrap {
+		flex: 0 0 auto;
+		height: 48px;
+	}
+
+	.addRow {
+		margin-top: 0;
+		margin-left: 0;
+		border-top: none;
+		border-left: 1px solid var(--border);
+		padding: 0 10px;
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		align-self: stretch;
+	}
+
+	.addBtn {
+		width: auto;
+		white-space: nowrap;
+		padding: 6px 10px;
+		display: flex;
+		align-items: center;
+	}
+
+	.deleteBtn {
+		opacity: 1;
+	}
+}

@@ -1,0 +1,26 @@
+.statusbar {
+	background: var(--surface);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 16px;
+	height: 36px;
+	border-top: 1px solid var(--border);
+}
+
+.copy {
+	font-family: var(--font-sans, sans-serif);
+	font-size: 10px;
+	color: var(--ghost);
+	letter-spacing: 0.02em;
+}
+
+.link {
+	color: var(--ink-dim);
+	text-decoration: none;
+	transition: color 0.12s;
+
+	&:hover {
+		color: var(--ink);
+	}
+}

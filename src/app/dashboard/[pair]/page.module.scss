@@ -1,0 +1,43 @@
+.layout {
+	display: grid;
+	grid-template-columns: 180px 1fr 260px;
+	height: 100%;
+	gap: 1px;
+	background-color: var(--border);
+	min-height: 0;
+}
+
+.center,
+.rightPanel {
+	background: var(--surface);
+	min-height: 0;
+	overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+	.layout {
+		grid-template-columns: 1fr 240px;
+	}
+
+	.layout > aside {
+		display: none;
+	}
+}
+
+@media (max-width: 768px) {
+	.layout {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 300px auto;
+		height: auto;
+	}
+
+	.layout > aside {
+		display: flex;
+	}
+
+	.rightPanel {
+		display: block;
+		overflow: visible;
+		min-height: 0;
+	}
+}
