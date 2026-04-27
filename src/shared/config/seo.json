@@ -1,0 +1,15 @@
+{
+  "siteName": "FLUX",
+  "baseUrl": "https://flux-trading.vercel.app",
+  "baseDescription": "Real-time Binance market data: candlestick charts, order book depth, live trade feed, and multi-pair watchlist.",
+  "pages": {
+    "fallback": {
+      "title": "FLUX - Select a trading pair",
+      "description": "Real-time Binance trading dashboard. Select a pair from the sidebar to view live charts, order book depth and trade feed."
+    },
+    "pair": {
+      "title": "{label} | FLUX",
+      "description": "Live {label} price chart, real-time order book depth and trade feed on FLUX."
+    }
+  }
+}
