@@ -1,6 +1,6 @@
 {
 	"siteName": "FLUX",
-	"baseUrl": "https://flux-trading.vercel.app",
+	"baseUrl": "https://binance-highload-sample.vercel.app/",
 	"baseDescription": "Real-time Binance market data: candlestick charts, order book depth, live trade feed, and multi-pair watchlist.",
 	"pages": {
 		"fallback": {
