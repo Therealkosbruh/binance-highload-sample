@@ -14,7 +14,7 @@ export default function useTradeFeed(symbol: string) {
 				const trades = await getBinanceTrades(symbol, controller.signal);
 				addTrades(trades);
 			} catch {
-					// 
+				//
 			}
 		})();
 		return () => controller.abort();

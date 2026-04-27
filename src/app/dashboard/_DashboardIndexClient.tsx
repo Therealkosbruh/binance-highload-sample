@@ -1,6 +1,6 @@
 "use client";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { usePairStore } from "@/entities/pair/model";
 import NoPairFallback from "@/widgets/NoPairFallback/NoPairFallback";
 import Sidebar from "@/widgets/Sidebar/Sidebar";

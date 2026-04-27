@@ -14,7 +14,7 @@ export default function useOrderBook(symbol: string) {
 				const data = await getBinanceDepth(symbol, controller.signal);
 				setSnapshot(data);
 			} catch {
-				// 
+				//
 			}
 		})();
 		return () => controller.abort();

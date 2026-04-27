@@ -6,9 +6,9 @@ import { useCandleStore } from "@/entities/candle/model";
 import useCandlestick from "@/entities/candle/useCandlestick";
 import { usePairStore } from "@/entities/pair/model";
 import type { ChartInterval } from "@/shared/types/types";
+import styles from "./CandlestickChart.module.scss";
 import { CANDLESTICK_SERIES_OPTIONS, CHART_OPTIONS } from "./chartConfig";
 import { toBarData } from "./toBarData";
-import styles from "./CandlestickChart.module.scss";
 
 const INTERVALS: ChartInterval[] = ["1m", "5m", "15m", "1h", "4h", "1d"];
 
