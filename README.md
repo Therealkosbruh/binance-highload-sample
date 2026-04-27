@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FLUX - Real-time Trading Dashboard
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript)
+![Zustand](https://img.shields.io/badge/Zustand-5-orange?style=flat-square)
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+
+Реализация торгового дашборда в реальном времени, который стримит живые данные с публичных WebSocket стримов Binance. Можно следить сразу за несколькими торговыми парами.
+
+Взаимодействие с back частью происходит через открытый api. 
+
+---
+
+## Что умеет
+
+- **Мультипарный TabBar** - открытие до 8 пар одновременно, мгновенное переключение
+- **Свечной график** - живой стрим через `lightweight-charts`, выбор интервала (1m / 5m / 15m / 1h / 4h / 1d)
+- **Стакан ордеров** - обновление в реальном времени, выбор глубины (10 / 20 / 50 / 100 уровней), индикатор спреда
+- **Лента сделок** - живые агрегированные трейды с цветовой маркировкой buy/sell
+- **Watch-list** - сохраняется в `localStorage`, поиск пар с дебаунсом через Binance REST API
+- **Динамические мета-теги** - title и description меняются в зависимости от открытой пары
+
+---
+
+## Архитектура
+
+Проект построен по **Feature-Sliced Design (FSD)** 
+
+```
+src/
+├── app/
+│   └── dashboard/
+│       ├── layout.tsx
+│       ├── page.tsx
+│       ├── _DashboardIndexClient.tsx
+│       └── [pair]/
+│           └── page.tsx
+│
+├── widgets/
+│   ├── CandlestickChart/
+│   ├── OrderBook/
+│   ├── TradeFeed/
+│   ├── Sidebar/
+│   ├── Topbar/
+│   ├── RightPanel/
+│   ├── NoPairFallback/
+│   └── Statusbar/
+│
+├── features/
+│   ├── add-pair/
+│   ├── connect-ws/
+│   └── connect-ticker/
+│
+├── entities/
+│   ├── candle/
+│   ├── order-book/
+│   ├── trade/
+│   ├── ticker/
+│   ├── pair/
+│   └── ws-status/
+│
+└── shared/
+    ├── api/
+    ├── ws/
+    ├── config/
+    ├── lib/
+    ├── hooks/
+    └── ui/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### WebSocket мультиплексор
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Ключевое место в производительности это `BinanceWSManager`. Класс оборачивает одно WebSocket-соединение и раздаёт сообщения по типизированным хендлерам через `Map`. Сообщения не диспатчатся сразу на каждый `onmessage`, а складываются в буфер и сбрасываются пачкой на каждый тик `requestAnimationFrame`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Используется два независимых экземпляра: `binanceWS` для комбо-стрима (klines + trades + depth) и `tickerWS` для 24h тикера.
 
-## Learn More
+### Динамические мета-теги
 
-To learn more about Next.js, take a look at the following resources:
+Все SEO-тексты лежат в `shared/config/seo.json`. Параметр `pair` из URL проходит через `sanitizePair` - функция принимает только строки вида `[A-Z0-9]{2,20}`, всё остальное отбрасывается и показывается фоллбек-метадата. Это закрывает отражённый XSS в мета-тегах и header injection.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Стек
 
-## Deploy on Vercel
+| Задача | Библиотека |
+|---|---|
+| Фреймворк | [Next.js 16](https://nextjs.org) - App Router, Server + Client компоненты |
+| UI | [React 19](https://react.dev) |
+| Язык | TypeScript 5 |
+| Стейт | [Zustand 5](https://zustand.docs.pmnd.rs) - devtools + persist |
+| Графики | [lightweight-charts 5](https://tradingview.github.io/lightweight-charts/) |
+| HTTP | [ky 2](https://github.com/sindresorhus/ky) |
+| Стили | SCSS Modules + CSS custom properties для темизации |
+| Линтинг | [Biome 2](https://biomejs.dev) |
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Запуск
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install
+npm run dev
+```
+
+### Скрипты
+
+```bash
+npm run dev       # Дев-сервер
+npm run build     # Продакшн-билд
+npm run start     # Продакшн-сервер
+npm run check     # Biome: линт + форматирование
+npm run lint      # Только линт
+npm run format    # Только форматирование (запись)
+```
+
+---
